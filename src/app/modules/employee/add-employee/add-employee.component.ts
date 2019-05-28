@@ -1,37 +1,30 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.scss']
 })
-export class AddEmployeeComponent implements OnInit {
+export class AddEmployeeComponent  {
   employee:any ={};
 @Output() saveData = new EventEmitter();
 @Output() onClose = new EventEmitter();
+// Employee Technical knowledge
   technologies:any[]= [
     {id:1, name:"JavaScript"},
     {id:2, name:"CSS"},
     {id:3, name:"TypeScript"},
     {id:4, name:"HTML"},
     {id:5, name:"React"},
-    {id:6, name:"Angular"},
+    {id:6, name:"Angular"}
+  ];
 
-  ]
+  // Regex validation for mobile number
+  mobilePattern:any=/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i; 
+
   selectedAns : any[] =[];
-
-
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-
-
-
-
   
+  // For multiple technology checkbox selected
   choose(ans: any, isChecked: boolean): void { 
    if(isChecked){
     let empIndex = this.selectedAns.findIndex(p=>{
@@ -53,11 +46,14 @@ export class AddEmployeeComponent implements OnInit {
       
   }
 
+  // To close Model
   closeModal():void {
     this.onClose.emit();
     this.onClose.emit('all closed');
   }
 
+
+  // To save form Data
   save():void{
     const submitData ={
       fName: this.employee.fName,
@@ -67,7 +63,9 @@ export class AddEmployeeComponent implements OnInit {
       isWorking: this.employee.isWorking,
       technologies:this.selectedAns
     }
-    console.log(submitData);
+    if (!this.employee.isWorking) {
+      submitData.isWorking = 'yes';
+    }
     this.saveData.emit(submitData);
     this.closeModal();
   }

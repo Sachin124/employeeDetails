@@ -1,79 +1,73 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">Modal</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
     <span aria-hidden="true">&times;</span>
-  </button>
+    </button>
 </div>
 <div class="modal-body">
-  <form (ngSubmit)="save()" #employeeForm="ngForm">
+    <form (ngSubmit)="save()" #employeeForm="ngForm">
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="fName">First Name</label>
-          <input type="text" class="form-control" id="fName" name="fName" [(ngModel)]="employee.fName"
-            placeholder="Enter First Name">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="fName">First Name</label>
+                <input type="text" class="form-control" id="fName" name="fName" [(ngModel)]="employee.fName"
+                placeholder="Enter First Name" #fName="ngModel" required>
+                <div *ngIf="fName.invalid && (fName.dirty || fName.touched)" class="alert alert-danger">
+                    <div *ngIf="fName.errors.required">
+                        First Name is required.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="lName">Last Name</label>
-          <input type="text" class="form-control" id="lName" name="lName" [(ngModel)]="employee.lName"
-            placeholder="Enter Last Name">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="lName">Last Name</label>
+                <input type="text" class="form-control" id="lName" name="lName" [(ngModel)]="employee.lName"
+                placeholder="Enter Last Name" #lName="ngModel" required>
+                <div *ngIf="lName.invalid && (lName.dirty || lName.touched)" class="alert alert-danger">
+                    <div *ngIf="lName.errors.required">
+                        Last Name is required.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="mobile">Mobile</label>
-          <input type="text" class="form-control" id="mobile" name="mobile" [(ngModel)]="employee.mobile"
-            placeholder="Enter Mobile">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="mobile">Mobile</label>
+                <input type="text" class="form-control" id="mobile" [pattern]="mobilePattern"  name="mobile" [(ngModel)]="employee.mobile"
+                placeholder="Enter Mobile"  #mobile="ngModel">
+                <div *ngIf="mobile.errors?.pattern" class="alert alert-danger">
+                    No charactor allowed!.
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" class="form-control" id="address" name="address" [(ngModel)]="employee.address"
-            placeholder="Enter Address">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" [(ngModel)]="employee.address"
+                placeholder="Enter Address">
+            </div>
         </div>
-      </div>
     </div>
-
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="isWorking" [(ngModel)]="employee.isWorking" id="isWorking"
-            value="Yes" checked>
-          <label class="form-check-label" for="isWorking">
-            I am working!
-          </label>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="isWorking" [(ngModel)]="employee.isWorking" id="isWorkingNot" value="No">
-          <label class="form-check-label" for="isWorkingNot">
-            Not working!
-          </label>
-        </div>
-      </div>
+    <div class="col">
+        <label class="radio-inline">
+        <input type="radio" name="isWorking" [(ngModel)]="employee.isWorking" id="isWorking" value="Yes" checked>I am
+        working!
+        </label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label class="radio-inline">
+        <input type="radio" name="isWorking" [(ngModel)]="employee.isWorking" id="isWorkingNot" value="No">Not working!
+        </label>
     </div>
-
-    <div class="row">
-        <div *ngFor="let option of technologies;  let j = index">
-            <input type="checkbox"   (change)="choose(option, $event.target.checked)"
-              name="options" id="{{j}}" />
-            <label for="{{j}}">{{option.name}}</label>
-          </div>
-    
+    <hr>
+    <div class="col">
+        <label class="checkbox-inline" *ngFor="let option of technologies;  let j = index">
+        &nbsp;&nbsp; <input type="checkbox" (change)="choose(option, $event.target.checked)" name="options"
+            id="{{j}}">{{option.name}}
+        </label> 
     </div>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <hr>
+    <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">Submit</button>
+    </form>
 </div>
