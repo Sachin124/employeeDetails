@@ -1,30 +1,45 @@
-<!-- <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table> -->
+<div class="row justify-content-center">
+  <button type="button" class="btn btn-primary" (click)="openModal(template)">Add Employee</button>
+
+</div>
+
+<br />
+<br />
+
+
+<table class="table table-responsive" *ngIf="employeeDetails.length != 0; else alert">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Address</th>
+      <th scope="col">Is-Working</th>
+      <th scope="col">Technology</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of employeeDetails; let i=index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{row.fName}}</td>
+      <td>{{row.lName}}</td>
+      <td>{{row.mobile}}</td>
+      <td>{{row.address}}</td>
+      <td>{{row.isWorking}}</td>
+
+      <!-- <td>{{row.}}</td> -->
+    </tr>   
+  </tbody>
+</table>
+
+<ng-template #alert>
+    <div class="alert alert-danger" role="alert">
+        Please add new employee!
+      </div>
+</ng-template>
+
+<ng-template #template>
+  <app-add-employee (saveData)="saveData($event)" (onClose)="execOnClose($event)"></app-add-employee>
+</ng-template>
