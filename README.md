@@ -4,7 +4,7 @@ In this application there are some customer details. Admin or application user c
 
 ~ Open This Project in Visual Studio Code.
 
-~ Open Visual Studio Terminal
+~ Open Visual Studio Terminal 
 
 # To open the terminal:
 
